@@ -1,0 +1,224 @@
+#' @name lognormalest
+#' @title Lognormal Estimators
+#'
+#' @description Lognormal models are also widely applied in various branches of natural, social and applied sciences.
+#' Given a pair of known constants in the parametric function for the statistics in the lognormal distribution, sample size, degree of freedom of the variance estimation of the log-transformed data, standardized variance of the sampling distribution of the log-transformed data, mean of the log-transformed data and standard deviation of the log-transformed data, this function returns an estimation for the lognormal distribution, including a total of thirty-eight different estimation methods, under a newly proposed unified framework in Zhang and Gou (2020).
+#'
+#'
+#' @param n sample size.
+#' @param m degree of freedom of the variance estimation of the log-transformed data.
+#' @param d standardized variance of the sampling distribution of the log-transformed data.
+#' @param mean.rn mean of the log-transformed data.
+#' @param sd.rn standard deviation of the log-transformed data.
+#' @param a the first known constants in the parametric function for the statistics.
+#' @param b the second known constants in the parametric function for the statistics.
+#' @param estimator a total of thirty-eight different estimation methods. See more descriptions in Section Details.
+#' @return estimation using a specific estimating method.
+#' @author Jiangtao Gou
+#' @author Fengqing (Zoe) Zhang
+#' @references
+#' Finney, D. J. (1941). On the distribution of a variate whose logarithm is normally distributed. Supplement to the \emph{Journal of the Royal Statistical Society}, \bold{7}: 155-161. <https://doi.org/10.2307/2983663>
+#'
+#' Zellner, A. (1971). Bayesian and non-Bayesian analysis of the log-normal distribution and log-normal regression. \emph{Journal of the American Statistical Association}, \bold{66}: 327-330. <https://doi.org/10.1080/01621459.1971.10482263>
+#'
+#' Evans, I. G. and Shaban, S. A. (1974). A note on estimation in lognormal models. \emph{Journal of the American Statistical Association}, \bold{69}: 779-781. <https://doi.org/10.2307/2286017>
+#'
+#' Rukhin, A. L. (1986). Improved estimation in lognormal models. \emph{Journal of the American Statistical Association}, \bold{81}: 1046-1049. <https://doi.org/10.1080/01621459.1986.10478371>
+#'
+#' El-Shaarawi, A. H. and Viveros, R. (1997). Inference about the mean in log-regression with environmental applications. \emph{Environmetrics}, \bold{8}: 569-582. <https://doi.org/10.1002/(SICI)1099-095X(199709/10)8:5<569::AID-ENV274>3.0.CO;2-I>
+#'
+#' Shen, H. and Zhu, Z. (2008). Efficient mean estimation in log-normal linear models. \emph{Journal of Statistical Planning and Inference}, \bold{138}: 552-567. <https://doi.org/10.1016/j.jspi.2006.10.016>
+#'
+#' Longford, N. T. (2009). Inference with the lognormal distribution. \emph{Journal of Statistical Planning and Inference}, \bold{139}: 2329-2340. <https://doi.org/10.1016/j.jspi.2008.10.015>
+#'
+#' Fabrizi, E. and Trivisano, C. (2012). Bayesian estimation of log-normal means with finite quadratic expected loss. \emph{Bayesian Analysis}, \bold{7}: 975-996. <https://doi.org/10.1214/12-BA733>
+#'
+#' Gou, J. and Tamhane, A. C. (2017). Estimation of a parametric function associated with the lognormal distribution. \emph{Communications in Statistics - Theory and Methods} \bold{46}: 8134-8154. <https://doi.org/10.1080/03610926.2016.1175628>
+#'
+#' Zhang, F. and Gou, J. (2020). A unified framework for estimation in lognormal models. Technical Report.
+#'
+#' @details
+#'Consider a parametric function in the original scale we are interested in estimating \eqn{\theta(a,b) = exp(a\mu + b\sigma^2/2)},where constants \emph{a} and \emph{b} are known.
+#' Specifically, \eqn{\theta(1,1)} is the mean of the lognormal distribution, \eqn{\theta(2,4)} is the second moment, \eqn{\theta(2,4)-\theta(2,2)} is the variance, and \eqn{(\theta(0,2) - 1)^{1/2}} is the coeficient of variation.
+#' \enumerate{
+#'  \item \code{unbiased}: Unbiased estimator (Finney, 1941)
+#'  \item \code{qml}: Quasi maximum likelihood estimator
+#'  \item \code{ml}: Maximum likelihood estimator
+#'  \item \code{sa}:  Simple adjustment estimator
+#'  \item \code{f}: Finney's unbiased estimator (Finney, 1941)
+#'  \item \code{z}: Zellner's estimator (Zellner, 1971)
+#'  \item \code{es}: Evans and Shaban’s estimator (Evans and Shaban, 1974, 1976)
+#'  \item \code{r-s}: Rukhin’s simple estimator (Rukhin, 1986)
+#'  \item \code{r-f}: Rukhin’s estimator using Finney's function (Rukhin, 1986)
+#'  \item \code{r-lo}: Rukhin’s locally optimal estimator (Rukhin, 1986)
+#'  \item \code{r-b}: Rukhin’s Bayes estimator (Rukhin, 1986)
+#'  \item \code{ev}: El-Shaarawi and Viveros' estimator (El-Shaarawi and Viveros, 1997)
+#'  \item \code{zh}: Zhou's estimator (Zhou, 1998)
+#'  \item \code{sz-mm}: Shen and Zhu's MM estimator (Shen and Zhu, 2008)
+#'  \item \code{sz-mb}: Shen and Zhu's MB estimator (Shen and Zhu, 2008)
+#'  \item \code{l-ub}: Longford's UB estimator (Longford, 2009)
+#'  \item \code{l-ms}: Longford's MS estimator (Longford, 2009)
+#'  \item \code{ft}: Fabrizi and Trivisano's Bayes estimator (Fabrizi and Trivisano, 2012)
+#'  \item \code{gt-f}: Gou and Tamhane's estimator using Finney's function (Gou and Tamhane, 2017)
+#'  \item \code{gt-es}: Gou and Tamhane's estimator using Evans and Shaban's function (Gou and Tamhane, 2017)
+#'  \item \code{gt-r}: Gou and Tamhane's estimator using Rukhin's function (Gou and Tamhane, 2017)
+#'  \item \code{zg-1}: Zhang and Gou's first estimator (Zhang and Gou, 2020)
+#'  \item \code{zg-2}: Zhang and Gou's second estimator (Zhang and Gou, 2020)
+#'  \item \code{zg-3}: Zhang and Gou's third estimator (Zhang and Gou, 2020)
+#'  \item \code{zg-4}: Zhang and Gou's fourth estimator (Zhang and Gou, 2020)
+#'  \item \code{zg-5}: Zhang and Gou's fifth estimator (Zhang and Gou, 2020)
+#'  \item \code{zg-6}: Zhang and Gou's sixth estimator (Zhang and Gou, 2020)
+#'  \item \code{zg-7}: Zhang and Gou's seventh estimator (Zhang and Gou, 2020)
+#'  \item \code{zg-8}: Zhang and Gou's eighth estimator (Zhang and Gou, 2020)
+#'  \item \code{zg-9}: Zhang and Gou's ninth estimator (Zhang and Gou, 2020)
+#'  \item \code{zg-10}: Zhang and Gou's tenth estimator (Zhang and Gou, 2020)
+#'  \item \code{zg-11}: Zhang and Gou's eleventh estimator (Zhang and Gou, 2020)
+#'  \item \code{zg-12}: Zhang and Gou's twelveth estimator (Zhang and Gou, 2020)
+#'  \item \code{zg-13}: Zhang and Gou's thirteenth estimator (Zhang and Gou, 2020)
+#'  \item \code{zg-14}: Zhang and Gou's fourteenth estimator (Zhang and Gou, 2020)
+#'  \item \code{zg-15}: Zhang and Gou's fifteenth estimator (Zhang and Gou, 2020)
+#'  \item \code{zg-16}: Zhang and Gou's sixteenth estimator (Zhang and Gou, 2020)
+#'  \item \code{zg-17}: Zhang and Gou's seventeenth estimator (Zhang and Gou, 2020)
+#'  \item \code{zg-18}: Zhang and Gou's eighteenth estimator (Zhang and Gou, 2020)
+#'  \item \code{zg-19}: Zhang and Gou's nineteenth estimator (Zhang and Gou, 2020)
+#'  }
+#' @examples
+#' library(fuel)
+#' # Unbiased Estimation (Finney, 1941)
+#' fuel::lognormalest(n=10, m=9, d=1/10, mean.rn=1, sd.rn=1, a=1, b=1, estimator='unbiased')
+#' # Longford's estimator, minimize the mean squared error (Longford, 2009)
+#' fuel::lognormalest(n=10, m=9, d=1/10, mean.rn=1, sd.rn=1, a=1, b=1, estimator='l-ms')
+#' # Gou and Tamhane's estimator, Rukhin type (Gou and Tamhane, 2017)
+#' fuel::lognormalest(n=10, m=9, d=1/10, mean.rn=1, sd.rn=1, a=1, b=1, estimator='gt-r')
+#' # Zhang and Gou's No.4 estimator (Zhang and Gou, 2020)
+#' fuel::lognormalest(n=10, m=9, d=1/10, mean.rn=1, sd.rn=1, a=1, b=1, estimator='zg-4')
+#'
+#' @export
+#' @import stats
+#'
+#'
+lognormalest <- function (n, m=n-1, d=1/n, mean.rn, sd.rn, a, b, estimator) {
+  # Test: lognormalest(5,4,1/5,1,1,1,1,'qml')
+  if (estimator == 'qml') {
+    result <- LN1010(a,b,n,m,d,mean.rn,sd.rn)
+  }
+  if (estimator == 'ml') {
+    result <- LN1020(a,b,n,m,d,mean.rn,sd.rn)
+  }
+  if (estimator == 'sa') {
+    result <- LN1030(a,b,n,m,d,mean.rn,sd.rn)
+  }
+  if (estimator == 'f') {
+    result <- LN1041(a,b,n,m,d,mean.rn,sd.rn)
+  }
+  if (estimator == 'unbiased') {
+    result <- LN1041(a,b,n,m,d,mean.rn,sd.rn)
+  }
+  if (estimator == 'z') {
+    result <- LN1050(a,b,n,m,d,mean.rn,sd.rn)
+  }
+  if (estimator == 'es') {
+    result <- LN1060(a,b,n,m,d,mean.rn,sd.rn)
+  }
+  if (estimator == 'r-s') {
+    result <- LN1070(a,b,n,m,d,mean.rn,sd.rn)
+  }
+  if (estimator == 'r-f') {
+    result <- LN1080(a,b,n,m,d,mean.rn,sd.rn)
+  }
+  if (estimator == 'r-lo') {
+    result <- LN1090(a,b,n,m,d,mean.rn,sd.rn)
+  }
+  if (estimator == 'r-b') {
+    result <- LN1095(a,b,n,m,d,mean.rn,sd.rn)
+  }
+  if (estimator == 'ev') {
+    result <- LN1100(a,b,n,m,d,mean.rn,sd.rn)
+  }
+  if (estimator == 'zh') {
+    result <- LN1110(a,b,n,m,d,mean.rn,sd.rn)
+  }
+  if (estimator == 'sz-mm') {
+    result <- LN1120(a,b,n,m,d,mean.rn,sd.rn)
+  }
+  if (estimator == 'sz-mb') {
+    result <- LN1130(a,b,n,m,d,mean.rn,sd.rn)
+  }
+  if (estimator == 'l-ub') {
+    result <- LN1140(a,b,n,m,d,mean.rn,sd.rn)
+  }
+  if (estimator == 'gt-f') {
+    result <- LN1140(a,b,n,m,d,mean.rn,sd.rn)
+  }
+  if (estimator == 'l-ms') {
+    result <- LN1150(a,b,n,m,d,mean.rn,sd.rn)
+  }
+  if (estimator == 'ft') {
+    result <- LN1155(a,b,n,m,d,mean.rn,sd.rn)
+  }
+  if (estimator == 'gt-es') {
+    result <- LN1160(a,b,n,m,d,mean.rn,sd.rn)
+  }
+  if (estimator == 'gt-r') {
+    result <- LN1170(a,b,n,m,d,mean.rn,sd.rn)
+  }
+  if (estimator == 'zg-1') {
+    result <- LN2010(a,b,n,m,d,mean.rn,sd.rn)
+  }
+  if (estimator == 'zg-2') {
+    result <- LN2020(a,b,n,m,d,mean.rn,sd.rn)
+  }
+  if (estimator == 'zg-3') {
+    result <- LN2030(a,b,n,m,d,mean.rn,sd.rn)
+  }
+  if (estimator == 'zg-4') {
+    result <- LN2040(a,b,n,m,d,mean.rn,sd.rn)
+  }
+  if (estimator == 'zg-5') {
+    result <- LN2050(a,b,n,m,d,mean.rn,sd.rn)
+  }
+  if (estimator == 'zg-6') {
+    result <- LN2060(a,b,n,m,d,mean.rn,sd.rn)
+  }
+  if (estimator == 'zg-7') {
+    result <- LN2070(a,b,n,m,d,mean.rn,sd.rn)
+  }
+  if (estimator == 'zg-8') {
+    result <- LN2080(a,b,n,m,d,mean.rn,sd.rn)
+  }
+  if (estimator == 'zg-9') {
+    result <- LN2090(a,b,n,m,d,mean.rn,sd.rn)
+  }
+  if (estimator == 'zg-10') {
+    result <- LN2100(a,b,n,m,d,mean.rn,sd.rn)
+  }
+  if (estimator == 'zg-11') {
+    result <- LN2110(a,b,n,m,d,mean.rn,sd.rn)
+  }
+  if (estimator == 'zg-12') {
+    result <- LN2120(a,b,n,m,d,mean.rn,sd.rn)
+  }
+  if (estimator == 'zg-13') {
+    result <- LN2130(a,b,n,m,d,mean.rn,sd.rn)
+  }
+  if (estimator == 'zg-14') {
+    result <- LN2140(a,b,n,m,d,mean.rn,sd.rn)
+  }
+  if (estimator == 'zg-15') {
+    result <- LN2150(a,b,n,m,d,mean.rn,sd.rn)
+  }
+  if (estimator == 'zg-16') {
+    result <- LN2155(a,b,n,m,d,mean.rn,sd.rn)
+  }
+  if (estimator == 'zg-17') {
+    result <- LN2160(a,b,n,m,d,mean.rn,sd.rn)
+  }
+  if (estimator == 'zg-18') {
+    result <- LN2170(a,b,n,m,d,mean.rn,sd.rn)
+  }
+  if (estimator == 'zg-19') {
+    result <- LN2180(a,b,n,m,d,mean.rn,sd.rn)
+  }
+  #
+  return (result)
+}
