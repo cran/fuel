@@ -2,7 +2,7 @@
 #' @title Standard Deviation Estimation for Lognormal Distribution
 #'
 #' @description Lognormal models are also widely applied in various branches of natural, social and applied sciences.
-#' Given a pair of known constants in the parametric function for the statistics in the lognormal distribution, sample size, degree of freedom of the variance estimation of the log-transformed data, standardized variance of the sampling distribution of the log-transformed data, mean of the log-transformed data and standard deviation of the log-transformed data, this function returns an estimation for the lognormal distribution, including a total of thirty-eight different estimation methods, under a newly proposed unified framework in Zhang and Gou (2020).
+#' Given a pair of known constants in the parametric function for the statistics in the lognormal distribution, sample size, degree of freedom of the variance estimation of the log-transformed data, standardized variance of the sampling distribution of the log-transformed data, mean of the log-transformed data and standard deviation of the log-transformed data, this function returns an estimation for the lognormal distribution, including a total of thirty-nine different estimation methods, under a newly proposed unified framework in Zhang and Gou (2020).
 #'
 #' @param data original data vector
 #' @param estimator a total of thirty-eight different estimation methods. See more descriptions in Section Details.
@@ -54,7 +54,9 @@
 #'  \item \code{sz-mb}: Shen and Zhu's MB estimator (Shen and Zhu, 2008)
 #'  \item \code{l-ub}: Longford's UB estimator (Longford, 2009)
 #'  \item \code{l-ms}: Longford's MS estimator (Longford, 2009)
-#'  \item \code{ft}: Fabrizi and Trivisano's Bayes estimator (Fabrizi and Trivisano, 2012)
+#'  \item \code{ft}: Fabrizi and Trivisano's Simplified Bayes estimator (Fabrizi and Trivisano, 2012)
+#'  \item \code{ft-s}: Fabrizi and Trivisano's Simplified Bayes estimator (Fabrizi and Trivisano, 2012)
+#'  \item \code{ft-b}: Fabrizi and Trivisano's Bayes estimator (Fabrizi and Trivisano, 2012)
 #'  \item \code{gt-f}: Gou and Tamhane's estimator using Finney's function (Gou and Tamhane, 2017)
 #'  \item \code{gt-es}: Gou and Tamhane's estimator using Evans and Shaban's function (Gou and Tamhane, 2017)
 #'  \item \code{gt-r}: Gou and Tamhane's estimator using Rukhin's function (Gou and Tamhane, 2017)

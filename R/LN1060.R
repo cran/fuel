@@ -1,5 +1,7 @@
 # ES
 # Modified on 2020-06-16
+# Test example (2020-06-16)
+# LN1060(a=1,b=1,n=25,m=24, d=1/2, mean.rn=1, sd.rn=1)
 #
 LN1060 <- function (a,b,n,m=n-1,d=1/n,mean.rn,sd.rn) {
 #
